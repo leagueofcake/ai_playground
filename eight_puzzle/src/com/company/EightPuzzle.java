@@ -26,6 +26,14 @@ public class EightPuzzle {
         }
     }
 
+    public EightPuzzle (EightPuzzle orig) {
+        board = new int[PUZZLE_HEIGHT][PUZZLE_WIDTH];
+        for (int row = 0; row < PUZZLE_HEIGHT; row++) {
+            System.arraycopy(orig.board[row], 0, board, 0, orig.board.length);
+        }
+        spacePoint = orig.spacePoint;
+    }
+
     @Override
     public String toString () {
         StringBuilder sb = new StringBuilder();
