@@ -99,4 +99,17 @@ public class EightPuzzle {
         }
         return false;
     }
+
+    public boolean isSolved () {
+        if (!isValidBoard()) return false;
+        int expectedNum = 1;
+        for (int row = 0; row < PUZZLE_HEIGHT; row++) {
+            for (int col = 0; col < PUZZLE_WIDTH; col++) {
+                if (row == PUZZLE_HEIGHT - 1 && col == PUZZLE_WIDTH - 1) return board[row][col] == 0;
+                if (board[row][col] != expectedNum) return false;
+                expectedNum++;
+            }
+        }
+        return true;
+    }
 }

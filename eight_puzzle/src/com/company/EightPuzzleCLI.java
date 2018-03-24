@@ -38,6 +38,8 @@ public class EightPuzzleCLI {
                     quit(); break;
                 case "?":
                     help(); break;
+                case "s":
+                    printSolved(); break;
                 default:
                     System.out.println("Unknown command. Type ? to see the commands list.");
                     break;
@@ -105,6 +107,14 @@ public class EightPuzzleCLI {
         }
     }
 
+    private void printSolved () {
+        if (currentPuzzle == null) {
+            System.out.println("No puzzle loaded!");
+        } else {
+            System.out.println(currentPuzzle.isSolved());
+        }
+    }
+
     private void help () {
         String helpText = "Commands List\n" +
                 "u    Move the space up\n" +
@@ -113,6 +123,7 @@ public class EightPuzzleCLI {
                 "r    Move the space right\n" +
                 "i    Input a puzzle from the command line\n" +
                 "p    Prints the currently loaded board\n" +
+                "s    Prints whether the board is solved\n" +
                 "?    Displays this command list\n" +
                 "q    Quits the program\n";
         System.out.println(helpText);
