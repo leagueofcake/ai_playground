@@ -40,6 +40,8 @@ public class EightPuzzleCLI {
                     help(); break;
                 case "s":
                     printSolved(); break;
+                case "solve":
+                    solve(); break;
                 default:
                     System.out.println("Unknown command. Type ? to see the commands list.");
                     break;
@@ -48,9 +50,7 @@ public class EightPuzzleCLI {
     }
 
     private void moveBoard (String movement) {
-        if (currentPuzzle == null) {
-            System.out.println("No puzzle loaded!");
-        } else {
+        if (checkPuzzleLoaded()) {
             switch (movement) {
                 case "u":
                     currentPuzzle.moveUp(); break;
@@ -100,17 +100,13 @@ public class EightPuzzleCLI {
     }
 
     private void printBoard () {
-        if (currentPuzzle == null) {
-            System.out.println("No puzzle loaded!");
-        } else {
+        if (checkPuzzleLoaded()) {
             System.out.println(currentPuzzle);
         }
     }
 
     private void printSolved () {
-        if (currentPuzzle == null) {
-            System.out.println("No puzzle loaded!");
-        } else {
+        if (checkPuzzleLoaded()) {
             System.out.println(currentPuzzle.isSolved());
         }
     }
@@ -127,6 +123,21 @@ public class EightPuzzleCLI {
                 "?    Displays this command list\n" +
                 "q    Quits the program\n";
         System.out.println(helpText);
+    }
+
+    private void solve () {
+        if (checkPuzzleLoaded()) {
+            Solver solver = new Solver(currentPuzzle);
+            solver.solveBFS();
+        }
+    }
+
+    private boolean checkPuzzleLoaded () {
+        if (currentPuzzle == null) {
+            System.out.println("No puzzle loaded!");
+            return false;
+        }
+        return true;
     }
 
     private void quit () {

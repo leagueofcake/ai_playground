@@ -1,6 +1,6 @@
 package com.company;
 
-import java.util.Arrays;
+import java.util.*;
 
 public class EightPuzzle {
     public static final int PUZZLE_WIDTH = 3;
@@ -29,9 +29,9 @@ public class EightPuzzle {
     public EightPuzzle (EightPuzzle orig) {
         board = new int[PUZZLE_HEIGHT][PUZZLE_WIDTH];
         for (int row = 0; row < PUZZLE_HEIGHT; row++) {
-            System.arraycopy(orig.board[row], 0, board, 0, orig.board.length);
+            System.arraycopy(orig.board[row], 0, board[row], 0, orig.board.length);
         }
-        spacePoint = orig.spacePoint;
+        spacePoint = new Point(orig.spacePoint.row, orig.spacePoint.col);
     }
 
     @Override
@@ -64,40 +64,78 @@ public class EightPuzzle {
         board[p2.row][p2.col] = temp;
     }
 
-    public boolean moveUp () {
-        if (spacePoint.row > 0) {
+    public boolean canMoveUp () {
+        return spacePoint.row > 0;
+    }
+
+    public boolean canMoveDown () {
+        return spacePoint.row + 1 < PUZZLE_HEIGHT;
+    }
+
+    public boolean canMoveLeft () {
+        return spacePoint.col > 0;
+    }
+
+    public boolean canMoveRight () {
+        return spacePoint.col + 1 < PUZZLE_WIDTH;
+    }
+
+    public void moveUp () {
+        if (canMoveUp()) {
             swap(spacePoint, new Point(spacePoint.row - 1, spacePoint.col));
             spacePoint.row--;
-            return true;
         }
-        return false;
     }
 
-    public boolean moveDown () {
-        if (spacePoint.row + 1 < PUZZLE_HEIGHT) {
+    public void moveDown () {
+        if (canMoveDown()) {
             swap(spacePoint, new Point(spacePoint.row + 1, spacePoint.col));
             spacePoint.row++;
-            return true;
         }
-        return false;
     }
 
-    public boolean moveLeft () {
-        if (spacePoint.col > 0) {
+    public void moveLeft () {
+        if (canMoveLeft()) {
             swap(spacePoint, new Point(spacePoint.row, spacePoint.col - 1));
             spacePoint.col--;
-            return true;
         }
-        return false;
     }
 
-    public boolean moveRight () {
-        if (spacePoint.col + 1 < PUZZLE_WIDTH) {
+    public void moveRight () {
+        if (canMoveRight()) {
             swap(spacePoint, new Point(spacePoint.row, spacePoint.col + 1));
             spacePoint.col++;
-            return true;
         }
-        return false;
+    }
+
+    public List<EightPuzzle> generatePossibleMoves () {
+        List<EightPuzzle> possibleMoves = new ArrayList<>();
+
+        if (canMoveUp()) {
+            EightPuzzle up = new EightPuzzle(this);
+            up.moveUp();
+            possibleMoves.add(up);
+        }
+
+        if (canMoveDown()) {
+            EightPuzzle down = new EightPuzzle(this);
+            down.moveDown();
+            possibleMoves.add(down);
+        }
+
+        if (canMoveLeft()) {
+            EightPuzzle left = new EightPuzzle(this);
+            left.moveLeft();
+            possibleMoves.add(left);
+        }
+
+        if (canMoveRight()) {
+            EightPuzzle right = new EightPuzzle(this);
+            right.moveRight();
+            possibleMoves.add(right);
+        }
+
+        return possibleMoves;
     }
 
     public boolean isSolved () {
@@ -112,4 +150,21 @@ public class EightPuzzle {
         }
         return true;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EightPuzzle that = (EightPuzzle) o;
+        return Arrays.equals(board, that.board) &&
+                Objects.equals(spacePoint, that.spacePoint);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(spacePoint);
+        result = 31 * result + Arrays.hashCode(board);
+        return result;
+    }
+
 }
