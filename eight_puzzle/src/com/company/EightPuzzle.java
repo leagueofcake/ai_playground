@@ -64,31 +64,39 @@ public class EightPuzzle {
         board[p2.row][p2.col] = temp;
     }
 
-    public void moveUp () {
+    public boolean moveUp () {
         if (spacePoint.row > 0) {
             swap(spacePoint, new Point(spacePoint.row - 1, spacePoint.col));
             spacePoint.row--;
+            return true;
         }
+        return false;
     }
 
-    public void moveDown () {
+    public boolean moveDown () {
         if (spacePoint.row + 1 < PUZZLE_HEIGHT) {
             swap(spacePoint, new Point(spacePoint.row + 1, spacePoint.col));
             spacePoint.row++;
+            return true;
         }
+        return false;
     }
 
-    public void moveLeft () {
+    public boolean moveLeft () {
         if (spacePoint.col > 0) {
             swap(spacePoint, new Point(spacePoint.row, spacePoint.col - 1));
             spacePoint.col--;
+            return true;
         }
+        return false;
     }
 
-    public void moveRight () {
+    public boolean moveRight () {
         if (spacePoint.col + 1 < PUZZLE_WIDTH) {
             swap(spacePoint, new Point(spacePoint.row, spacePoint.col + 1));
             spacePoint.col++;
+            return true;
         }
+        return false;
     }
 }
