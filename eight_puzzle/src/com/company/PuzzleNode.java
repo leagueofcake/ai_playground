@@ -5,10 +5,16 @@ import java.util.Objects;
 public class PuzzleNode {
     public EightPuzzle current;
     public PuzzleNode parent;
+    public int depth;
 
     public PuzzleNode (PuzzleNode parent, EightPuzzle current) {
         this.parent = parent;
         this.current = current;
+        if (parent == null) {
+            this.depth = 0;
+        } else {
+            this.depth = parent.depth + 1;
+        }
     }
 
     @Override

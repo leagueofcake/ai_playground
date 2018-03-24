@@ -151,6 +151,26 @@ public class EightPuzzle {
         return true;
     }
 
+    public int heuristicManhattan () {
+        int totalDistance = 0;
+        for (int row = 0; row < PUZZLE_HEIGHT; row++) {
+            for (int col = 0; col < PUZZLE_WIDTH; col++) {
+                int num = board[row][col];
+                int targetRow, targetCol;
+                if (num == 0) {
+                    targetRow = PUZZLE_HEIGHT - 1;
+                    targetCol = PUZZLE_WIDTH - 1;
+                } else {
+                    targetRow = (num - 1) / PUZZLE_HEIGHT;
+                    targetCol = (num - 1) % PUZZLE_HEIGHT;
+                }
+                totalDistance += (Math.abs(targetRow - row) + Math.abs(targetCol - col));
+            }
+        }
+
+        return totalDistance;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -128,7 +128,8 @@ public class EightPuzzleCLI {
     private void solve () {
         if (checkPuzzleLoaded()) {
             Solver solver = new Solver(currentPuzzle);
-            solver.solveBFS();
+//            solver.solveBFS();
+            solver.solveAStar();
         }
     }
 
