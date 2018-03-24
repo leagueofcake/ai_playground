@@ -25,6 +25,11 @@ public class EightPuzzleCLI {
             System.out.print("Command: ");
             String command = scanner.nextLine().trim();
             switch (command) {
+                case "u":
+                case "d":
+                case "l":
+                case "r":
+                    moveBoard(command); break;
                 case "i":
                     inputBoard(scanner); break;
                 case "p":
@@ -37,6 +42,24 @@ public class EightPuzzleCLI {
                     System.out.println("Unknown command. Type ? to see the commands list.");
                     break;
             }
+        }
+    }
+
+    private void moveBoard (String movement) {
+        if (currentPuzzle == null) {
+            System.out.println("No puzzle loaded!");
+        } else {
+            switch (movement) {
+                case "u":
+                    currentPuzzle.moveUp(); break;
+                case "d":
+                    currentPuzzle.moveDown(); break;
+                case "l":
+                    currentPuzzle.moveLeft(); break;
+                case "r":
+                    currentPuzzle.moveRight(); break;
+            }
+            printBoard();
         }
     }
 
@@ -84,6 +107,10 @@ public class EightPuzzleCLI {
 
     private void help () {
         String helpText = "Commands List\n" +
+                "u    Move the space up\n" +
+                "d    Move the space down\n" +
+                "l    Move the space left\n" +
+                "r    Move the space right\n" +
                 "i    Input a puzzle from the command line\n" +
                 "p    Prints the currently loaded board\n" +
                 "?    Displays this command list\n" +
