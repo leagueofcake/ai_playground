@@ -10,96 +10,42 @@ public class Solver {
     }
 
     public void solveGreedy () {
-        long nodesExpanded = 0;
-
-        Set<EightPuzzle> visited = new HashSet<>();
-        PriorityQueue<PuzzleNode> pq = new PriorityQueue<>(new Comparator<PuzzleNode>() {
-            @Override
-            public int compare(PuzzleNode o1, PuzzleNode o2) {
-                return (o1.current.heuristicManhattan()) - (o2.current.heuristicManhattan());
-            }
-        });
-        Set<PuzzleNode> queueSet = new HashSet<>();
-
-        PuzzleNode currNode = new PuzzleNode(null, original);
-        pq.add(currNode);
-        queueSet.add(currNode);
-
-        while (!pq.isEmpty()) {
-            currNode = pq.poll();
-            queueSet.remove(currNode);
-//            System.out.println("CURRENT HEURISTIC: " + (currNode.current.heuristicManhattan()));
-            nodesExpanded++;
-
-            if (currNode.current.isSolved()) break;
-
-            List<EightPuzzle> possibleMoves = currNode.current.generatePossibleMoves();
-            for (EightPuzzle e: possibleMoves) {
-                PuzzleNode p = new PuzzleNode(currNode, e);
-                if (!visited.contains(e) && !queueSet.contains(p)) {
-                    pq.add(p);
-                    queueSet.add(p);
-                }
-            }
-
-            visited.add(currNode.current);
-        }
-
-        checkAndPrintSolution(currNode, nodesExpanded);
-    }
-
-    public void solveAStar () {
-        long nodesExpanded = 0;
-
-        Set<EightPuzzle> visited = new HashSet<>();
-        PriorityQueue<PuzzleNode> pq = new PriorityQueue<>(new Comparator<PuzzleNode>() {
-            @Override
-            public int compare(PuzzleNode o1, PuzzleNode o2) {
-                return (o1.depth + o1.current.heuristicManhattan()) - (o2.depth + o2.current.heuristicManhattan());
-            }
-        });
-        Set<PuzzleNode> queueSet = new HashSet<>();
-
-        PuzzleNode currNode = new PuzzleNode(null, original);
-        pq.add(currNode);
-        queueSet.add(currNode);
-
-        while (!pq.isEmpty()) {
-            currNode = pq.poll();
-            queueSet.remove(currNode);
-//            System.out.println("CURRENT HEURISTIC: " + (currNode.current.heuristicManhattan() + currNode.depth));
-            nodesExpanded++;
-
-            if (currNode.current.isSolved()) break;
-
-            List<EightPuzzle> possibleMoves = currNode.current.generatePossibleMoves();
-            for (EightPuzzle e: possibleMoves) {
-                PuzzleNode p = new PuzzleNode(currNode, e);
-                if (!visited.contains(e) && !queueSet.contains(p)) {
-                    pq.add(p);
-                    queueSet.add(p);
-                }
-            }
-
-            visited.add(currNode.current);
-        }
-
-        checkAndPrintSolution(currNode, nodesExpanded);
+        solveWithHeuristic(greedyManhattan());
     }
 
     public void solveBFS () {
+        solveWithHeuristic(puzzleNodeDepth());
+    }
+
+    public void solveAStar () {
+        solveWithHeuristic(aStarManhattan());
+    }
+
+    private Comparator<PuzzleNode> greedyManhattan () {
+        return (p1, p2) -> (p1.current.heuristicManhattan() - p2.current.heuristicManhattan());
+    }
+
+    private Comparator<PuzzleNode> puzzleNodeDepth () {
+        return (p1, p2) -> (p1.depth - p2.depth);
+    }
+
+    private Comparator<PuzzleNode> aStarManhattan () {
+        return (p1, p2) -> (greedyManhattan().compare(p1, p2) + puzzleNodeDepth().compare(p1, p2));
+    }
+
+    private void solveWithHeuristic (Comparator<PuzzleNode> heuristicFunc) {
         long nodesExpanded = 0;
 
         Set<EightPuzzle> visited = new HashSet<>();
-        Queue<PuzzleNode> queue = new LinkedList<>();
+        PriorityQueue<PuzzleNode> pq = new PriorityQueue<>(heuristicFunc);
         Set<PuzzleNode> queueSet = new HashSet<>();
 
         PuzzleNode currNode = new PuzzleNode(null, original);
-        queue.add(currNode);
+        pq.add(currNode);
         queueSet.add(currNode);
 
-        while (!queue.isEmpty()) {
-            currNode = queue.remove();
+        while (!pq.isEmpty()) {
+            currNode = pq.poll();
             queueSet.remove(currNode);
             nodesExpanded++;
 
@@ -109,7 +55,7 @@ public class Solver {
             for (EightPuzzle e: possibleMoves) {
                 PuzzleNode p = new PuzzleNode(currNode, e);
                 if (!visited.contains(e) && !queueSet.contains(p)) {
-                    queue.add(p);
+                    pq.add(p);
                     queueSet.add(p);
                 }
             }
