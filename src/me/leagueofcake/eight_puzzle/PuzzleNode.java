@@ -11,9 +11,9 @@ import java.util.Objects;
  * - the depth of the current node
  */
 public class PuzzleNode {
-    public EightPuzzle current;
-    public PuzzleNode parent;
-    public int depth;
+    public final EightPuzzle current;
+    public final PuzzleNode parent;
+    public final int depth;
 
     /**
      * Constructor for PuzzleNode.

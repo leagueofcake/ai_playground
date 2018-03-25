@@ -15,7 +15,7 @@ public class EightPuzzle {
     public static final int PUZZLE_WIDTH = 3;
     public static final int PUZZLE_HEIGHT = 3;
 
-    private int[][] board;
+    private final int[][] board;
     private Point spacePoint;
 
     /**

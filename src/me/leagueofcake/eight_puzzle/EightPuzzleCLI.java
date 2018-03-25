@@ -238,7 +238,6 @@ public class EightPuzzleCLI {
         List<Integer> permutation = new ArrayList<>();
         for (int i = 0; i < EightPuzzle.PUZZLE_WIDTH * EightPuzzle.PUZZLE_HEIGHT; i++) permutation.add(i);
 
-        Solver solver;
         EightPuzzle result;
         Set<EightPuzzle> generated = new HashSet<>();
 

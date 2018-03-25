@@ -11,7 +11,7 @@ import java.util.*;
  *   - A* (Manhattan Distance + Depth)
  */
 public class Solver {
-    EightPuzzle original;
+    private final EightPuzzle original;
 
     /**
      * Constructor for the Solver.
@@ -23,7 +23,7 @@ public class Solver {
     }
 
     /**
-     * Solves the puzzle using a greedy appraoch (Manhattan distance).
+     * Solves the puzzle using a greedy approach (Manhattan distance).
      * @return Whether the puzzle was solved successfully.
      */
     public boolean solveGreedy () {
