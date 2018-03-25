@@ -9,6 +9,47 @@ public class Solver {
         original = new EightPuzzle(puzzle);
     }
 
+    public void solveGreedy () {
+        long nodesExpanded = 0;
+
+        Set<EightPuzzle> visited = new HashSet<>();
+        PriorityQueue<PuzzleNode> pq = new PriorityQueue<>(new Comparator<PuzzleNode>() {
+            @Override
+            public int compare(PuzzleNode o1, PuzzleNode o2) {
+                return (o1.current.heuristicManhattan()) - (o2.current.heuristicManhattan());
+            }
+        });
+        Set<PuzzleNode> queueSet = new HashSet<>();
+
+        PuzzleNode currNode = new PuzzleNode(null, original);
+        pq.add(currNode);
+        queueSet.add(currNode);
+
+        while (!pq.isEmpty()) {
+            currNode = pq.poll();
+            queueSet.remove(currNode);
+//            System.out.println("CURRENT HEURISTIC: " + (currNode.current.heuristicManhattan()));
+            nodesExpanded++;
+
+            if (currNode.current.isSolved()) break;
+
+            List<EightPuzzle> possibleMoves = currNode.current.generatePossibleMoves();
+            for (EightPuzzle e: possibleMoves) {
+                PuzzleNode p = new PuzzleNode(currNode, e);
+                if (!visited.contains(e) && !queueSet.contains(p)) {
+                    pq.add(p);
+                    queueSet.add(p);
+                }
+            }
+
+            visited.add(currNode.current);
+        }
+        System.out.println("Solved!");
+
+        Deque<EightPuzzle> pathStack = generatePath(currNode);
+        printSolution(pathStack, nodesExpanded);
+    }
+
     public void solveAStar () {
         long nodesExpanded = 0;
 

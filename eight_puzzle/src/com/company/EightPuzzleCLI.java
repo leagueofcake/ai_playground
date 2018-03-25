@@ -44,6 +44,8 @@ public class EightPuzzleCLI {
                     solveBFS(); break;
                 case "a*":
                     solveAStar(); break;
+                case "greedy":
+                    solveGreedy(); break;
                 default:
                     System.out.println("Unknown command. Type ? to see the commands list.");
                     break;
@@ -140,6 +142,13 @@ public class EightPuzzleCLI {
         if (checkPuzzleLoaded()) {
             Solver solver = new Solver(currentPuzzle);
             solver.solveAStar();
+        }
+    }
+
+    private void solveGreedy () {
+        if (checkPuzzleLoaded()) {
+            Solver solver = new Solver(currentPuzzle);
+            solver.solveGreedy();
         }
     }
 
