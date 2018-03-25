@@ -40,8 +40,10 @@ public class EightPuzzleCLI {
                     help(); break;
                 case "s":
                     printSolved(); break;
-                case "solve":
-                    solve(); break;
+                case "bfs":
+                    solveBFS(); break;
+                case "a*":
+                    solveAStar(); break;
                 default:
                     System.out.println("Unknown command. Type ? to see the commands list.");
                     break;
@@ -117,6 +119,8 @@ public class EightPuzzleCLI {
                 "d    Move the space down\n" +
                 "l    Move the space left\n" +
                 "r    Move the space right\n" +
+                "bfs  Solves the puzzle using BFS\n" +
+                "a*   Solves the puzzle using A* search with Manhattan distance heuristic\n" +
                 "i    Input a puzzle from the command line\n" +
                 "p    Prints the currently loaded board\n" +
                 "s    Prints whether the board is solved\n" +
@@ -125,10 +129,16 @@ public class EightPuzzleCLI {
         System.out.println(helpText);
     }
 
-    private void solve () {
+    private void solveBFS () {
         if (checkPuzzleLoaded()) {
             Solver solver = new Solver(currentPuzzle);
-//            solver.solveBFS();
+            solver.solveBFS();
+        }
+    }
+
+    private void solveAStar () {
+        if (checkPuzzleLoaded()) {
+            Solver solver = new Solver(currentPuzzle);
             solver.solveAStar();
         }
     }
