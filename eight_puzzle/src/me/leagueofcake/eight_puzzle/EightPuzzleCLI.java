@@ -1,6 +1,6 @@
 package me.leagueofcake.eight_puzzle;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class EightPuzzleCLI {
     private EightPuzzle currentPuzzle;
@@ -25,6 +25,8 @@ public class EightPuzzleCLI {
             System.out.print("Command: ");
             String command = scanner.nextLine().trim();
             switch (command) {
+                case "gen":
+                    generatePuzzle(); break;
                 case "u":
                 case "d":
                 case "l":
@@ -117,6 +119,7 @@ public class EightPuzzleCLI {
 
     private void help () {
         String helpText = "Commands List\n" +
+                "gen  Generate a solveable puzzle and sets current puzzle to it\n" +
                 "u    Move the space up\n" +
                 "d    Move the space down\n" +
                 "l    Move the space left\n" +
@@ -134,21 +137,21 @@ public class EightPuzzleCLI {
     private void solveBFS () {
         if (checkPuzzleLoaded()) {
             Solver solver = new Solver(currentPuzzle);
-            solver.solveBFS();
+            solver.solveBFS(false);
         }
     }
 
     private void solveAStar () {
         if (checkPuzzleLoaded()) {
             Solver solver = new Solver(currentPuzzle);
-            solver.solveAStar();
+            solver.solveAStar(false);
         }
     }
 
     private void solveGreedy () {
         if (checkPuzzleLoaded()) {
             Solver solver = new Solver(currentPuzzle);
-            solver.solveGreedy();
+            solver.solveGreedy(false);
         }
     }
 
@@ -158,6 +161,38 @@ public class EightPuzzleCLI {
             return false;
         }
         return true;
+    }
+
+    private void generatePuzzle () {
+        int n = EightPuzzle.PUZZLE_WIDTH * EightPuzzle.PUZZLE_HEIGHT;
+        int[][] board = new int[EightPuzzle.PUZZLE_HEIGHT][EightPuzzle.PUZZLE_WIDTH];
+
+        List<Integer> permutation = new ArrayList<>();
+        for (int i = 0; i < n; i++) permutation.add(i);
+
+        Solver solver;
+        EightPuzzle result;
+
+        Set<EightPuzzle> generated = new HashSet<>();
+
+        do {
+            do {
+                Collections.shuffle(permutation);
+                for (int row = 0; row < EightPuzzle.PUZZLE_HEIGHT; row++) {
+                    for (int col = 0; col < EightPuzzle.PUZZLE_WIDTH; col++) {
+                        board[row][col] = permutation.get((row * EightPuzzle.PUZZLE_WIDTH) + col);
+                    }
+                }
+
+                result = new EightPuzzle(board);
+            } while (generated.contains(result));
+
+            generated.add(result);
+            solver = new Solver(result);
+        } while (!solver.checkSolveable());
+
+        currentPuzzle = result;
+        printBoard();
     }
 
     private void quit () {

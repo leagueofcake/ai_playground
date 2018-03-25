@@ -9,16 +9,20 @@ public class Solver {
         original = new EightPuzzle(puzzle);
     }
 
-    public void solveGreedy () {
-        solveWithHeuristic(greedyManhattan());
+    public boolean checkSolveable () {
+        return solveGreedy(true);
     }
 
-    public void solveBFS () {
-        solveWithHeuristic(puzzleNodeDepth());
+    public boolean solveGreedy (boolean quiet) {
+        return solveWithHeuristic(greedyManhattan(), quiet);
     }
 
-    public void solveAStar () {
-        solveWithHeuristic(aStarManhattan());
+    public boolean solveBFS (boolean quiet) {
+        return solveWithHeuristic(puzzleNodeDepth(), quiet);
+    }
+
+    public boolean solveAStar (boolean quiet) {
+        return solveWithHeuristic(aStarManhattan(), quiet);
     }
 
     private Comparator<PuzzleNode> greedyManhattan () {
@@ -33,7 +37,7 @@ public class Solver {
         return (p1, p2) -> (greedyManhattan().compare(p1, p2) + puzzleNodeDepth().compare(p1, p2));
     }
 
-    private void solveWithHeuristic (Comparator<PuzzleNode> heuristicFunc) {
+    private boolean solveWithHeuristic (Comparator<PuzzleNode> heuristicFunc, boolean quiet) {
         long nodesExpanded = 0;
 
         Set<EightPuzzle> visited = new HashSet<>();
@@ -63,20 +67,23 @@ public class Solver {
             visited.add(currNode.current);
         }
 
-        checkAndPrintSolution(currNode, nodesExpanded);
-    }
+        if (currNode.current.isSolved()) {
+            if (!quiet) {
+                System.out.println("Solved!");
 
-    private void checkAndPrintSolution (PuzzleNode lastNode, long nodesExpanded) {
-        if (lastNode.current.isSolved()) {
-            System.out.println("Solved!");
+                Deque<EightPuzzle> pathStack = generatePath(currNode);
+                printSolution(pathStack);
 
-            Deque<EightPuzzle> pathStack = generatePath(lastNode);
-            printSolution(pathStack);
+                System.out.println(String.format("Expanded %d nodes.", nodesExpanded));
+                System.out.println(String.format("Requires %d moves.", pathStack.size() - 1));
+            }
 
-            System.out.println(String.format("Expanded %d nodes.", nodesExpanded));
-            System.out.println(String.format("Requires %d moves.", pathStack.size() - 1));
+            return true;
         } else {
-            System.out.println("Unsolveable!");
+            if (!quiet) {
+                System.out.println("Unsolveable!");
+            }
+            return false;
         }
     }
 
