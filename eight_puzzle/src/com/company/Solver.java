@@ -44,10 +44,8 @@ public class Solver {
 
             visited.add(currNode.current);
         }
-        System.out.println("Solved!");
 
-        Deque<EightPuzzle> pathStack = generatePath(currNode);
-        printSolution(pathStack, nodesExpanded);
+        checkAndPrintSolution(currNode, nodesExpanded);
     }
 
     public void solveAStar () {
@@ -85,10 +83,8 @@ public class Solver {
 
             visited.add(currNode.current);
         }
-        System.out.println("Solved!");
 
-        Deque<EightPuzzle> pathStack = generatePath(currNode);
-        printSolution(pathStack, nodesExpanded);
+        checkAndPrintSolution(currNode, nodesExpanded);
     }
 
     public void solveBFS () {
@@ -120,10 +116,22 @@ public class Solver {
 
             visited.add(currNode.current);
         }
-        System.out.println("Solved!");
 
-        Deque<EightPuzzle> pathStack = generatePath(currNode);
-        printSolution(pathStack, nodesExpanded);
+        checkAndPrintSolution(currNode, nodesExpanded);
+    }
+
+    private void checkAndPrintSolution (PuzzleNode lastNode, long nodesExpanded) {
+        if (lastNode.current.isSolved()) {
+            System.out.println("Solved!");
+
+            Deque<EightPuzzle> pathStack = generatePath(lastNode);
+            printSolution(pathStack);
+
+            System.out.println(String.format("Expanded %d nodes.", nodesExpanded));
+            System.out.println(String.format("Requires %d moves.", pathStack.size() - 1));
+        } else {
+            System.out.println("Unsolveable!");
+        }
     }
 
     private Deque<EightPuzzle> generatePath (PuzzleNode lastNode) {
@@ -139,15 +147,12 @@ public class Solver {
         return pathStack;
     }
 
-    private void printSolution (Deque<EightPuzzle> path, long nodesExpanded) {
+    private void printSolution (Deque<EightPuzzle> path) {
         for (EightPuzzle e: path) {
             System.out.println("Move:");
             System.out.println(e);
             System.out.println();
         }
-
-        System.out.println(String.format("Expanded %d nodes.", nodesExpanded));
-        System.out.println(String.format("Requires %d moves.", path.size() - 1));
     }
 
 }
