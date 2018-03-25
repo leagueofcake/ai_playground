@@ -1,4 +1,4 @@
-package com.company;
+package me.leagueofcake.eight_puzzle;
 
 import java.util.Objects;
 

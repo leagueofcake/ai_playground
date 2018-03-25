@@ -1,4 +1,4 @@
-package com.company;
+package me.leagueofcake.eight_puzzle;
 
 import java.util.*;
 
@@ -186,5 +186,4 @@ public class EightPuzzle {
         result = 31 * result + Arrays.deepHashCode(board);
         return result;
     }
-
 }
