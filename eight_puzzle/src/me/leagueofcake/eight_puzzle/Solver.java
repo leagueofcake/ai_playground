@@ -10,7 +10,7 @@ public class Solver {
     }
 
     public boolean checkSolveable () {
-        return solveGreedy(true);
+        return original.isSolveable();
     }
 
     public boolean solveGreedy (boolean quiet) {

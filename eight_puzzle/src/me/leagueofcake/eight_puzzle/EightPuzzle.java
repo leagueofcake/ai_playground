@@ -171,6 +171,18 @@ public class EightPuzzle {
         return totalDistance;
     }
 
+    public boolean isSolveable () {
+        int inversions = 0;
+        int expectedNum = 1;
+        for (int row = 0; row < EightPuzzle.PUZZLE_HEIGHT; row++) {
+            for (int col = row; col < EightPuzzle.PUZZLE_WIDTH; col++) {
+                inversions += Math.abs(expectedNum - board[row][col]);
+                expectedNum++;
+            }
+        }
+        return inversions % 2 == 0;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

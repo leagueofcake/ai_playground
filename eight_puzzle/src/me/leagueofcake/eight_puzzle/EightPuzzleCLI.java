@@ -48,6 +48,8 @@ public class EightPuzzleCLI {
                     solveAStar(); break;
                 case "greedy":
                     solveGreedy(); break;
+                case "chk":
+                    checkSolveable(); break;
                 default:
                     System.out.println("Unknown command. Type ? to see the commands list.");
                     break;
@@ -129,6 +131,7 @@ public class EightPuzzleCLI {
                 "i    Input a puzzle from the command line\n" +
                 "p    Prints the currently loaded board\n" +
                 "s    Prints whether the board is solved\n" +
+                "chk  Prints whether the current board is solveable\n" +
                 "?    Displays this command list\n" +
                 "q    Quits the program\n";
         System.out.println(helpText);
@@ -193,6 +196,11 @@ public class EightPuzzleCLI {
 
         currentPuzzle = result;
         printBoard();
+    }
+
+    private void checkSolveable () {
+        String result = currentPuzzle.isSolveable() ? "Solveable!" : "Unsolveable!";
+        System.out.println(result);
     }
 
     private void quit () {
