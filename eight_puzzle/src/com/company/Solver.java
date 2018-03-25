@@ -9,14 +9,6 @@ public class Solver {
         original = new EightPuzzle(puzzle);
     }
 
-    public void printSolution (Deque<EightPuzzle> path) {
-        for (EightPuzzle e: path) {
-            System.out.println("Move:");
-            System.out.println(e);
-            System.out.println();
-        }
-    }
-
     public void solveAStar () {
         long nodesExpanded = 0;
 
@@ -54,16 +46,8 @@ public class Solver {
         }
         System.out.println("Solved!");
 
-        Deque<EightPuzzle> pathStack = new ArrayDeque<>();
-        pathStack.add(currNode.current);
-
-        while (currNode.parent != null) {
-            currNode = currNode.parent;
-            pathStack.addFirst(currNode.current);
-        }
-        printSolution(pathStack);
-        System.out.println(String.format("Expanded %d nodes.", nodesExpanded));
-        System.out.println(String.format("Requires %d moves.", pathStack.size() - 1));
+        Deque<EightPuzzle> pathStack = generatePath(currNode);
+        printSolution(pathStack, nodesExpanded);
     }
 
     public void solveBFS () {
@@ -76,10 +60,10 @@ public class Solver {
         PuzzleNode currNode = new PuzzleNode(null, original);
         queue.add(currNode);
         queueSet.add(currNode);
-        queueSet.remove(currNode);
 
         while (!queue.isEmpty()) {
             currNode = queue.remove();
+            queueSet.remove(currNode);
             nodesExpanded++;
 
             if (currNode.current.isSolved()) break;
@@ -97,6 +81,12 @@ public class Solver {
         }
         System.out.println("Solved!");
 
+        Deque<EightPuzzle> pathStack = generatePath(currNode);
+        printSolution(pathStack, nodesExpanded);
+    }
+
+    private Deque<EightPuzzle> generatePath (PuzzleNode lastNode) {
+        PuzzleNode currNode = lastNode;
         Deque<EightPuzzle> pathStack = new ArrayDeque<>();
         pathStack.add(currNode.current);
 
@@ -104,8 +94,19 @@ public class Solver {
             currNode = currNode.parent;
             pathStack.addFirst(currNode.current);
         }
-        printSolution(pathStack);
-        System.out.println(String.format("Expanded %d nodes.", nodesExpanded));
-        System.out.println(String.format("Requires %d moves.", pathStack.size() - 1));
+
+        return pathStack;
     }
+
+    private void printSolution (Deque<EightPuzzle> path, long nodesExpanded) {
+        for (EightPuzzle e: path) {
+            System.out.println("Move:");
+            System.out.println(e);
+            System.out.println();
+        }
+
+        System.out.println(String.format("Expanded %d nodes.", nodesExpanded));
+        System.out.println(String.format("Requires %d moves.", path.size() - 1));
+    }
+
 }
