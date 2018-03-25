@@ -2,11 +2,27 @@ package me.leagueofcake.eight_puzzle;
 
 import java.util.Objects;
 
+/**
+ * PuzzleNode wrapper class.
+ *
+ * Tracks:
+ * - the current board state
+ * - a parent node (to help with generating the solution)
+ * - the depth of the current node
+ */
 public class PuzzleNode {
     public EightPuzzle current;
     public PuzzleNode parent;
     public int depth;
 
+    /**
+     * Constructor for PuzzleNode.
+     *
+     * Current depth is set to parent's depth + 1, or 0 if parent is null (curr is root node).
+     *
+     * @param parent - the parent node
+     * @param current - the current board state
+     */
     public PuzzleNode (PuzzleNode parent, EightPuzzle current) {
         this.parent = parent;
         this.current = current;

@@ -5,6 +5,11 @@ import java.util.Objects;
 public class Point {
     public int row, col;
 
+    /**
+     * Constructs a point from a given row and col value.
+     * @param row Row number
+     * @param col Column number
+     */
     public Point (int row, int col) {
         this.row = row;
         this.col = col;
