@@ -176,14 +176,14 @@ public class EightPuzzle {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         EightPuzzle that = (EightPuzzle) o;
-        return Arrays.equals(board, that.board) &&
+        return Arrays.deepEquals(board, that.board) &&
                 Objects.equals(spacePoint, that.spacePoint);
     }
 
     @Override
     public int hashCode() {
         int result = Objects.hash(spacePoint);
-        result = 31 * result + Arrays.hashCode(board);
+        result = 31 * result + Arrays.deepHashCode(board);
         return result;
     }
 
