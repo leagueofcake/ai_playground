@@ -173,13 +173,22 @@ public class EightPuzzle {
 
     public boolean isSolveable () {
         int inversions = 0;
-        int expectedNum = 1;
+        int[] arr = new int[EightPuzzle.PUZZLE_WIDTH * EightPuzzle.PUZZLE_HEIGHT];
+        int curr = 0;
         for (int row = 0; row < EightPuzzle.PUZZLE_HEIGHT; row++) {
-            for (int col = row; col < EightPuzzle.PUZZLE_WIDTH; col++) {
-                inversions += Math.abs(expectedNum - board[row][col]);
-                expectedNum++;
+            for (int col = 0; col < EightPuzzle.PUZZLE_WIDTH; col++) {
+                arr[curr++] = board[row][col];
             }
         }
+
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[i] != 0 && arr[j] != 0 && arr[j] < arr[i]) {
+                    inversions++;
+                }
+            }
+        }
+
         return inversions % 2 == 0;
     }
 
