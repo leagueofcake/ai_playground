@@ -55,9 +55,7 @@ public class SudokuCLI {
                     quit(); break;
                 case "?":
                     help(); break;
-                case "s":
-                    printSolved(); break;
-                case "sol":
+                case "solve":
                     solve(); break;
                 default:
                     System.out.println("Unknown command. Type ? to see the commands list.");
@@ -112,25 +110,15 @@ public class SudokuCLI {
     }
 
     /**
-     * Prints out whether the current board is solved, if one is loaded.
-     */
-    private void printSolved () {
-        if (checkPuzzleLoaded()) {
-            System.out.println(currentPuzzle.isSolved());
-        }
-    }
-
-    /**
      * Prints out the command list and information on each command.
      */
     private void help () {
         String helpText = "Commands List\n" +
-                "i    Input a sudoku board from the command line\n" +
-                "p    Prints the currently loaded board\n" +
-                "s    Prints whether the board is solved\n" +
-                "sol  Attempts to solve the Sudoku puzzle\n" +
-                "?    Displays this command list\n" +
-                "q    Quits the program\n";
+                "i      Input a Sudoku board from the command line\n" +
+                "p      Prints the currently loaded board\n" +
+                "solve  Attempts to solve the Sudoku puzzle\n" +
+                "?      Displays this command list\n" +
+                "q      Quits the program\n";
         System.out.println(helpText);
     }
 

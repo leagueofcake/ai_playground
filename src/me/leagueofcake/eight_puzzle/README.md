@@ -19,8 +19,9 @@ Three methods of solving have been implemented:
 The CLI operates on a current puzzle state. Initially, there is no currently loaded puzzle - either generate one using 
 `gen` or manually input one using `i` (input a row of integers at a time, separated by spaces). 
 
-Once a puzzle state has been solved using one of the above approaches, the CLI will print out the number of nodes 
-expanded and the number of moves required to solve the puzzle.
+Once a puzzle state has been solved using one of the above approaches, the CLI will print out the sequence of steps
+required to solve the puzzle, as well as the number of nodes expanded and the number of moves required to solve 
+the puzzle.
 
 ### Manipulate Board State
 | Command | Description                                                   |
