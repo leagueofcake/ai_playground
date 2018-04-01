@@ -13,7 +13,7 @@ import java.util.*;
  * A detailed list of commands can be found by inputting ? on the CLI.
  */
 public class SudokuCLI {
-    private Board currentPuzzle;
+    private SudokuBoard currentPuzzle;
     private boolean running;
     private static final boolean DEBUG = true;
 
@@ -78,16 +78,16 @@ public class SudokuCLI {
      */
     private void inputBoard (Scanner scanner) {
         System.out.println(String.format("Type %s characters per line (%s - %s), or . for an empty space.",
-                Board.BOARD_SIZE, 1, Board.BOARD_SIZE));
+                SudokuBoard.BOARD_SIZE, 1, SudokuBoard.BOARD_SIZE));
 
-        char[][] inputBoard = new char[Board.BOARD_SIZE][Board.BOARD_SIZE];
-        for (int row = 0; row < Board.BOARD_SIZE; row++) {
+        char[][] inputBoard = new char[SudokuBoard.BOARD_SIZE][SudokuBoard.BOARD_SIZE];
+        for (int row = 0; row < SudokuBoard.BOARD_SIZE; row++) {
             String splitInput = scanner.nextLine().trim();
-            if (splitInput.length() != Board.BOARD_SIZE) {
+            if (splitInput.length() != SudokuBoard.BOARD_SIZE) {
                 System.out.println("Error: invalid input size for the row");
                 row--;
             } else {
-                for (int col = 0; col < Board.BOARD_SIZE; col++) {
+                for (int col = 0; col < SudokuBoard.BOARD_SIZE; col++) {
                     char c = splitInput.charAt(col);
                     if (c == '.' || (1 <= c - '0' && c - '0' <= 9)) {
                         inputBoard[row][col] = c;
@@ -99,7 +99,7 @@ public class SudokuCLI {
             }
         }
 
-        currentPuzzle = new Board(inputBoard);
+        currentPuzzle = new SudokuBoard(inputBoard);
     }
 
     /**

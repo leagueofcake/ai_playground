@@ -9,7 +9,7 @@ import java.util.Stack;
  * Solves each board using basic elimination and guesses with backtracking.
  */
 class Solver {
-    private final Board boardToBeSolved;
+    private final SudokuBoard boardToBeSolved;
 
 //    /**
 //     * Runner for the solver. Takes in boards as 2d character arrays, with '.' representing an empty space
@@ -26,16 +26,16 @@ class Solver {
 //        char[][] board6 = new char[][]{{'.', '.', '.', '.', '.', '.', '.', '.', '.'}, {'.', '.', '.', '.', '.', '3', '.', '8', '5'}, {'.', '.', '1', '.', '2', '.', '.', '.', '.'}, {'.', '.', '.', '5', '.', '7', '.', '.', '.'}, {'.', '.', '4', '.', '.', '.', '1', '.', '.'}, {'.', '9', '.', '.', '.', '.', '.', '.', '.'}, {'5', '.', '.', '.', '.', '.', '.', '7', '3'}, {'.', '.', '2', '.', '1', '.', '.', '.', '.'}, {'.', '.', '.', '.', '4', '.', '.', '.', '9'}};
 //
 //        Solver s = new Solver();
-//        s.solveSudoku(new Board(board));
-//        s.solveSudoku(new Board(board2));
-//        s.solveSudoku(new Board(board3));
-//        s.solveSudoku(new Board(board4));
-//        s.solveSudoku(new Board(board5));
-//        s.solveSudoku(new Board(board6));
+//        s.solveSudoku(new SudokuBoard(board));
+//        s.solveSudoku(new SudokuBoard(board2));
+//        s.solveSudoku(new SudokuBoard(board3));
+//        s.solveSudoku(new SudokuBoard(board4));
+//        s.solveSudoku(new SudokuBoard(board5));
+//        s.solveSudoku(new SudokuBoard(board6));
 //    }
 
-    public Solver (Board b) {
-        boardToBeSolved = new Board(b);
+    public Solver (SudokuBoard b) {
+        boardToBeSolved = new SudokuBoard(b);
     }
 
     /**
@@ -43,12 +43,12 @@ class Solver {
      *
      */
     public void solveSudoku() {
-        Stack<Board> boardStack = new Stack<>();
+        Stack<SudokuBoard> boardStack = new Stack<>();
         Stack<Guess> guessStack = new Stack<>();
 
         // Find all definite matches
         boardToBeSolved.findAllMatches();
-        Board currBoard = boardToBeSolved;
+        SudokuBoard currBoard = boardToBeSolved;
 
         // Generate a Guess to test
         Guess currGuess = boardToBeSolved.nextGuess();
@@ -69,7 +69,7 @@ class Solver {
                 currBoard = boardStack.peek();
                 currGuess = guessStack.peek();
             } else { // Try next candidate in guess
-                currBoard = new Board(boardStack.peek());
+                currBoard = new SudokuBoard(boardStack.peek());
                 currGuess = guessStack.peek();
                 currBoard.applyGuess(currGuess.point, currGuess.possible.pop());
                 boardStack.push(currBoard);

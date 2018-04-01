@@ -3,7 +3,7 @@ package me.leagueofcake.sudoku;
 import java.util.*;
 
 /**
- * Board class representing a 9x9 Sudoku board.
+ * SudokuBoard class representing a 9x9 Sudoku board.
  *
  * Stores a 2d char array representing the board, with '.' representing an empty space
  * and '1' - '9' representing their corresponding numbers.
@@ -15,10 +15,10 @@ import java.util.*;
  * -cols - A List of Sets (each of which contains the numbers for each column) to help with lookups
  * -boxes - A List of Sets (each of which contains the numbers for each 3x3 box) to help with lookups
  */
-public class Board {
+public class SudokuBoard {
     public static final int BOARD_SIZE = 9;
 
-    private Board parent;
+    private SudokuBoard parent;
     private char[][] board;
     private Set<Point> toFillIn;
     private List<Set<Byte>> rows;
@@ -27,9 +27,9 @@ public class Board {
 
     /**
      * Copy constructor
-     * @param b - Board object to be copied
+     * @param b - SudokuBoard object to be copied
      */
-    public Board(Board b) {
+    public SudokuBoard(SudokuBoard b) {
         parent = b;
         rows = new ArrayList<>();
         cols = new ArrayList<>();
@@ -51,11 +51,11 @@ public class Board {
     }
 
     /**
-     * Constructor for a Board from a 2d char array, with '.' representing an empty space
+     * Constructor for a SudokuBoard from a 2d char array, with '.' representing an empty space
      *
      * @param board 2d character array representing the board
      */
-    public Board(char[][] board) {
+    public SudokuBoard(char[][] board) {
         parent = null;
         rows = new ArrayList<>();
         cols = new ArrayList<>();
@@ -285,9 +285,9 @@ public class Board {
     }
 
     /**
-     * @return The parent Board for the given Board
+     * @return The parent SudokuBoard for the given SudokuBoard
      */
-    public Board getParent () {
+    public SudokuBoard getParent () {
         return parent;
     }
 
