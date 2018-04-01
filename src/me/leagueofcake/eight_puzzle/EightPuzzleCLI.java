@@ -167,19 +167,20 @@ public class EightPuzzleCLI {
      */
     private void help () {
         String helpText = "Commands List\n" +
-                "gen  Generate a solvable puzzle and sets current puzzle to it\n" +
-                "u    Move the space up\n" +
-                "d    Move the space down\n" +
-                "l    Move the space left\n" +
-                "r    Move the space right\n" +
-                "bfs  Solves the puzzle using BFS\n" +
-                "a*   Solves the puzzle using A* search with Manhattan distance heuristic\n" +
-                "i    Input a puzzle from the command line\n" +
-                "p    Prints the currently loaded board\n" +
-                "s    Prints whether the board is solved\n" +
-                "chk  Prints whether the current board is solvable\n" +
-                "?    Displays this command list\n" +
-                "q    Quits the program\n";
+                "gen    Generate a solvable puzzle and sets current puzzle to it\n" +
+                "i      Input a puzzle from the command line\n" +
+                "u      Move the space up\n" +
+                "d      Move the space down\n" +
+                "l      Move the space left\n" +
+                "r      Move the space right\n" +
+                "bfs    Solves the puzzle using BFS\n" +
+                "greedy Solves the puzzle using a greedy approach with Manhattan distance heuristic\n" +
+                "a*     Solves the puzzle using A* search with Manhattan distance heuristic\n" +
+                "p      Prints the currently loaded board\n" +
+                "s      Prints whether the board is solved\n" +
+                "chk    Prints whether the current board is solvable\n" +
+                "?      Displays this command list\n" +
+                "q      Quits the program\n";
         System.out.println(helpText);
     }
 
