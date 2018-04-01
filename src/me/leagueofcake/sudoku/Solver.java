@@ -3,7 +3,18 @@ package me.leagueofcake.sudoku;
 import java.util.Arrays;
 import java.util.Stack;
 
+/**
+ * Solver class for Sudoku.
+ *
+ * Solves each board using basic elimination and guesses with backtracking.
+ */
 class Solver {
+    /**
+     * Runner for the solver. Takes in boards as 2d character arrays, with '.' representing an empty space
+     * and '1' - '9' representing their corresponding numbers.
+     *
+     * @param args - Not used.
+     */
     public static void main(String[] args) {
         char[][] board = new char[][]{{'.', '.', '9', '7', '4', '8', '.', '.', '.'}, {'7', '.', '.', '.', '.', '.', '.', '.', '.'}, {'.', '2', '.', '1', '.', '9', '.', '.', '.'}, {'.', '.', '7', '.', '.', '.', '2', '4', '.'}, {'.', '6', '4', '.', '1', '.', '5', '9', '.'}, {'.', '9', '8', '.', '.', '.', '3', '.', '.'}, {'.', '.', '.', '8', '.', '3', '.', '2', '.'}, {'.', '.', '.', '.', '.', '.', '.', '.', '6'}, {'.', '.', '.', '2', '7', '5', '9', '.', '.'}};
         char[][] board2 = new char[][]{{'.', '.', '.', '3', '.', '.', '.', '.', '9'}, {'.', '7', '.', '.', '.', '1', '.', '2', '.'}, {'5', '.', '6', '.', '.', '9', '4', '.', '.'}, {'.', '2', '8', '.', '.', '.', '6', '4', '.'}, {'.', '.', '.', '8', '9', '.', '.', '.', '.'}, {'.', '3', '1', '.', '.', '.', '9', '.', '7'}, {'.', '.', '.', '.', '5', '.', '3', '.', '.'}, {'1', '.', '7', '.', '.', '4', '.', '.', '8'}, {'4', '.', '.', '6', '.', '2', '.', '5', '.'}};
@@ -21,23 +32,31 @@ class Solver {
         s.solveSudoku(board6);
     }
 
+    /**
+     * Solves a given Sudoku board using elimination, guesses and backtracking.
+     *
+     * @param board - A 2d character array representing the board state
+     */
     private void solveSudoku(char[][] board) {
         Board b = new Board(board);
         Stack<Board> boardStack = new Stack<>();
         Stack<Guess> guessStack = new Stack<>();
 
+        // Find all definite matches
         b.findAllMatches();
         Board currBoard = b;
+
+        // Generate a Guess to test
         Guess currGuess = b.nextGuess();
         boardStack.push(currBoard);
         guessStack.push(currGuess);
 
-        System.out.println("GUESSING STAGE");
+        // System.out.println("GUESSING STAGE");
         while (!currBoard.isSolved()) {
             // System.out.println("STILL SOLVING!");
-            for (int i = 0; i < 9; i++) {
+            // for (int i = 0; i < 9; i++) {
                 // System.out.println(Arrays.toString(currBoard.board[i]));
-            }
+            // }
 
             if (currGuess.possible.empty()) { // No more candidates - backtrack
                 // System.out.println(String.format("NO MORE CANDIDATES FOR: (%d, %d)", currGuess.point.col, currGuess.point.row));
@@ -53,7 +72,7 @@ class Solver {
 
                 int matchesFound = currBoard.findMatch();
                 if (matchesFound == -1) { // Invalid guess, try other guess
-                    System.out.println("BACKTRACKING");
+                    // System.out.println("BACKTRACKING");
                     boardStack.pop();
                     currBoard = currBoard.getParent();
                     currGuess = guessStack.peek();
@@ -65,7 +84,7 @@ class Solver {
                         matchesFound = b.findMatch();
                     }
                     if (matchesFound == -1) { // Invalid guess, try other guess
-                        System.out.println("BACKTRACKING");
+                        // System.out.println("BACKTRACKING");
                         boardStack.pop();
                         currBoard = currBoard.getParent();
                         currGuess = guessStack.peek();
@@ -85,6 +104,9 @@ class Solver {
                 }
             }
         }
+
+        // Print out solved board state
+        System.out.println("Solved!");
         for (int i = 0; i < 9; i++) {
             System.out.println(Arrays.toString(board[i]));
         }
