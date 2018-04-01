@@ -83,19 +83,8 @@ class Solver {
             }
         }
 
-        // Copy board state from b to original board
-        for (int row = 0; row < 9; row++) {
-            for (int col = 0; col < 9; col++) {
-                if (boardToBeSolved.getBoard()[row][col] == '.') {
-                    boardToBeSolved.getBoard()[row][col] = currNode.current.getBoard()[row][col];
-                }
-            }
-        }
-
         // Print out solved board state
         System.out.println("Solved!");
-        for (int i = 0; i < 9; i++) {
-            System.out.println(Arrays.toString(boardToBeSolved.getBoard()[i]));
-        }
+        System.out.println(currNode.current);
     }
 }
