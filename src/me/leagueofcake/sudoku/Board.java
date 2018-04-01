@@ -302,7 +302,7 @@ public class Board {
     public String toString () {
         StringBuilder sb = new StringBuilder();
         for (int row = 0; row < 9; row++) {
-            sb.append(board[row]);
+            sb.append(Arrays.toString(board[row]));
             if (row != BOARD_SIZE - 1) sb.append('\n');
         }
         return sb.toString();
