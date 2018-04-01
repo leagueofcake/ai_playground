@@ -18,7 +18,6 @@ import java.util.*;
 public class SudokuBoard {
     public static final int BOARD_SIZE = 9;
 
-    private SudokuBoard parent;
     private char[][] board;
     private Set<Point> toFillIn;
     private List<Set<Byte>> rows;
@@ -30,7 +29,6 @@ public class SudokuBoard {
      * @param b - SudokuBoard object to be copied
      */
     public SudokuBoard(SudokuBoard b) {
-        parent = b;
         rows = new ArrayList<>();
         cols = new ArrayList<>();
         boxes = new ArrayList<>();
@@ -56,7 +54,6 @@ public class SudokuBoard {
      * @param board 2d character array representing the board
      */
     public SudokuBoard(char[][] board) {
-        parent = null;
         rows = new ArrayList<>();
         cols = new ArrayList<>();
         boxes = new ArrayList<>();
@@ -282,13 +279,6 @@ public class SudokuBoard {
             if (rows.get(i).size() != BOARD_SIZE) return false;
         }
         return true;
-    }
-
-    /**
-     * @return The parent SudokuBoard for the given SudokuBoard
-     */
-    public SudokuBoard getParent () {
-        return parent;
     }
 
     /**

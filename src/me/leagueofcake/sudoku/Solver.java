@@ -25,45 +25,46 @@ class Solver {
      *
      */
     public void solveSudoku() {
-        Stack<SudokuBoard> boardStack = new Stack<>();
+        BoardNode currNode = new BoardNode(null, boardToBeSolved);
+
+        Stack<BoardNode> nodeStack = new Stack<>();
         Stack<Guess> guessStack = new Stack<>();
 
         // Find all definite matches
-        boardToBeSolved.findAllMatches();
-        SudokuBoard currBoard = boardToBeSolved;
+        currNode.current.findAllMatches();
 
         // Generate a Guess to test
-        Guess currGuess = boardToBeSolved.nextGuess();
-        boardStack.push(currBoard);
+        Guess currGuess = currNode.current.nextGuess();
+        nodeStack.push(currNode);
         guessStack.push(currGuess);
 
         // System.out.println("GUESSING STAGE");
-        while (!currBoard.isSolved()) {
+        while (!currNode.current.isSolved()) {
             // System.out.println("STILL SOLVING!");
             // for (int i = 0; i < 9; i++) {
-                // System.out.println(Arrays.toString(currBoard.board[i]));
+                // System.out.println(Arrays.toString(currNode.current.board[i]));
             // }
 
             if (currGuess.possible.empty()) { // No more candidates - backtrack
                 // System.out.println(String.format("NO MORE CANDIDATES FOR: (%d, %d)", currGuess.point.col, currGuess.point.row));
-                boardStack.pop();
+                nodeStack.pop();
                 guessStack.pop();
-                currBoard = boardStack.peek();
+                currNode = nodeStack.peek();
                 currGuess = guessStack.peek();
             } else { // Try next candidate in guess
-                currBoard = new SudokuBoard(boardStack.peek());
+                currNode = new BoardNode(currNode, new SudokuBoard(nodeStack.peek().current));
                 currGuess = guessStack.peek();
-                currBoard.applyGuess(currGuess.point, currGuess.possible.pop());
-                boardStack.push(currBoard);
+                currNode.current.applyGuess(currGuess.point, currGuess.possible.pop());
+                nodeStack.push(currNode);
 
-                int matchesFound = currBoard.findMatch();
+                int matchesFound = currNode.current.findMatch();
                 if (matchesFound == -1) { // Invalid guess, try other guess
                     // System.out.println("BACKTRACKING");
-                    boardStack.pop();
-                    currBoard = currBoard.getParent();
+                    nodeStack.pop();
+                    currNode = currNode.parent;
                     currGuess = guessStack.peek();
                 } else if (matchesFound == 0) { // All possible matches found - make a new guess
-                    currGuess = currBoard.nextGuess();
+                    currGuess = currNode.current.nextGuess();
                     guessStack.push(currGuess);
                 } else { // Matches found - keep trying to match
                     while (matchesFound > 0) {
@@ -71,11 +72,11 @@ class Solver {
                     }
                     if (matchesFound == -1) { // Invalid guess, try other guess
                         // System.out.println("BACKTRACKING");
-                        boardStack.pop();
-                        currBoard = currBoard.getParent();
+                        nodeStack.pop();
+                        currNode = currNode.parent;
                         currGuess = guessStack.peek();
                     } else { // All posssible matches found - make a new guess
-                        currGuess = currBoard.nextGuess();
+                        currGuess = currNode.current.nextGuess();
                         guessStack.push(currGuess);
                     }
                 }
@@ -86,7 +87,7 @@ class Solver {
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
                 if (boardToBeSolved.getBoard()[row][col] == '.') {
-                    boardToBeSolved.getBoard()[row][col] = currBoard.getBoard()[row][col];
+                    boardToBeSolved.getBoard()[row][col] = currNode.current.getBoard()[row][col];
                 }
             }
         }
