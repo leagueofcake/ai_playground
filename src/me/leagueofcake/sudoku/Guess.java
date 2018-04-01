@@ -10,6 +10,11 @@ public class Guess {
     public Point point;
     public Stack<Byte> possible;
 
+    /**
+     * Constructs a Guess from a given point and a Set of possible numbers for the given point.
+     * @param point - Point object (row, col)
+     * @param possible - A set of Bytes representing the possible numbers for the point
+     */
     public Guess (Point point, Set<Byte> possible) {
         this.point = point;
         this.possible = new Stack<>();
