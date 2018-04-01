@@ -1,9 +1,6 @@
 package me.leagueofcake.sudoku;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Board class representing a 9x9 Sudoku board.
@@ -19,7 +16,7 @@ import java.util.Set;
  * -boxes - A List of Sets (each of which contains the numbers for each 3x3 box) to help with lookups
  */
 public class Board {
-    private static int BOARD_SIZE = 9;
+    public static final int BOARD_SIZE = 9;
 
     private Board parent;
     private char[][] board;
@@ -299,5 +296,15 @@ public class Board {
      */
     public char[][] getBoard () {
         return board;
+    }
+
+    @Override
+    public String toString () {
+        StringBuilder sb = new StringBuilder();
+        for (int row = 0; row < 9; row++) {
+            sb.append(board[row]);
+            if (row != BOARD_SIZE - 1) sb.append('\n');
+        }
+        return sb.toString();
     }
 }
