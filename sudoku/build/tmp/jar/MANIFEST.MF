@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Implementation-Title: sudoku
+Implementation-Version: 1.0.0
+Main-Class: me.leagueofcake.sudoku.SudokuCLI
+

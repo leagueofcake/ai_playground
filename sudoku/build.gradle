@@ -1,0 +1,17 @@
+version = "1.0.0"
+
+mainClassName = "me.leagueofcake.sudoku.SudokuCLI"
+
+run {
+    standardInput = System.in
+}
+
+jar {
+    manifest {
+        attributes(
+            "Implementation-Title": project.name,
+            "Implementation-Version": project.version,
+            "Main-Class": "me.leagueofcake.sudoku.SudokuCLI"
+        )
+    }
+}
