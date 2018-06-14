@@ -1,7 +1,7 @@
 # Sudoku Solver
 [Wikipedia](https://en.wikipedia.org/wiki/Sudoku)
 
-Farily basic solver for Sudoku puzzles.
+Fairly basic solver for Sudoku puzzles.
 
 A command-line interface (SudokuCLI) is supplied to interact with the Solver, allowing you to input a board and 
 solve it.
